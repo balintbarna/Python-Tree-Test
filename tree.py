@@ -10,11 +10,12 @@ class Leaf():
 
 
 class Node():
+    def __init__(self, name: str, *children):
         if name is "ErrorNode":
             raise TypeError()
         self.name = name
         self.parent = None
-        self.children = [leaf1, leaf2]
+        self.children = children
         for child in self.children:
             child.parent = self
 
