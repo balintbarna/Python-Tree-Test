@@ -2,12 +2,15 @@ from tree import Node, Leaf, Visitor
 
 
 class EvaluateExpression(Visitor):
-    pass
+    def traverse(self, tree_element):
+        if not hasattr(tree_element, "evaluate"):
+            raise TypeError()
+        return tree_element.evaluate()
 
 
 class PrintExpression(Visitor):
     def traverse(self, tree_element):
-        if not hasattr(tree_element, "print"):
+        if not hasattr(tree_element, "get_expression"):
             raise TypeError()
         return tree_element.get_expression()
 
@@ -28,6 +31,9 @@ class Expression():
     def print(self):
         pass
 
+    def evaluate(self):
+        pass
+
 
 class Integer(Expression):
     def __init__(self, v) -> None:
@@ -41,6 +47,9 @@ class Integer(Expression):
     def get_expression(self):
         return "{}".format(self.value)
 
+    def evaluate(self):
+        return self.value
+
 
 class Float(Expression):
     def __init__(self, v) -> None:
@@ -51,6 +60,9 @@ class Float(Expression):
 
     def get_expression(self):
         return "{:.1f}".format(self.value)
+
+    def evaluate(self):
+        return self.value
 
 
 class Add(Expression):
@@ -63,6 +75,9 @@ class Add(Expression):
     def get_expression(self):
         return "{} + {}".format(get_child_expression(self.children[0]), get_child_expression(self.children[1]))
 
+    def evaluate(self):
+        return self.children[0].evaluate() / self.children[1].evaluate()
+
 
 class Divide(Expression):
     def __init__(self, *children) -> None:
@@ -73,6 +88,9 @@ class Divide(Expression):
 
     def get_expression(self):
         return "{} / {}".format(get_child_expression(self.children[0]), get_child_expression(self.children[1]))
+
+    def evaluate(self):
+        return self.children[0].evaluate() / self.children[1].evaluate()
 
 
 class Multiply(Expression):
@@ -85,6 +103,9 @@ class Multiply(Expression):
     def get_expression(self):
         return "{} * {}".format(get_child_expression(self.children[0]), get_child_expression(self.children[1]))
 
+    def evaluate(self):
+        return self.children[0].evaluate() * self.children[1].evaluate()
+
 
 class Negative(Expression):
     def __init__(self, child) -> None:
@@ -95,3 +116,6 @@ class Negative(Expression):
 
     def get_expression(self):
         return "-{}".format(get_child_expression(self.children[0]))
+
+    def evaluate(self):
+        return -1 * self.children[0].evaluate()
