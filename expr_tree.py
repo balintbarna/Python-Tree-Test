@@ -55,7 +55,7 @@ class Multiply(Expression):
 
 class Negative(Expression):
     def __init__(self, child) -> None:
-        self.children = (child)
+        self.children = [child]
 
     def __str__(self) -> str:
         return type(self).__name__
