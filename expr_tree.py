@@ -9,31 +9,53 @@ class PrintExpression(Visitor):
     pass
 
 
-class Add():
+class Expression():
+    pass
+
+
+class Add(Expression):
     def __init__(self, *args) -> None:
         self.args = args
 
+    def __str__(self) -> str:
+        return type(self).__name__
 
-class Integer():
+
+class Integer(Expression):
     def __init__(self, v) -> None:
         self.value = v
 
-
-class Divide():
-    def __init__(self, *args) -> None:
-        self.args = args
+    def __str__(self) -> str:
+        return "{}({})".format(type(self).__name__, self.value)
 
 
-class Multiply():
-    def __init__(self, *args) -> None:
-        self.args = args
-
-
-class Float():
+class Float(Expression):
     def __init__(self, v) -> None:
         self.value = v
 
+    def __str__(self) -> str:
+        return "{}({:.1f})".format(type(self).__name__, self.value)
 
-class Negative():
-    def __init__(self, arg) -> None:
-        self.arg = arg
+
+class Divide(Expression):
+    def __init__(self, *children) -> None:
+        self.children = children
+
+    def __str__(self) -> str:
+        return type(self).__name__
+
+
+class Multiply(Expression):
+    def __init__(self, *children) -> None:
+        self.children = children
+
+    def __str__(self) -> str:
+        return type(self).__name__
+
+
+class Negative(Expression):
+    def __init__(self, child) -> None:
+        self.children = (child)
+
+    def __str__(self) -> str:
+        return type(self).__name__
