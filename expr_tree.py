@@ -76,7 +76,7 @@ class Add(Expression):
         return "{} + {}".format(get_child_expression(self.children[0]), get_child_expression(self.children[1]))
 
     def evaluate(self):
-        return self.children[0].evaluate() / self.children[1].evaluate()
+        return self.children[0].evaluate() + self.children[1].evaluate()
 
 
 class Divide(Expression):
