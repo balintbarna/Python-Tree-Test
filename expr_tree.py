@@ -90,7 +90,11 @@ class Divide(Expression):
         return "{} / {}".format(get_child_expression(self.children[0]), get_child_expression(self.children[1]))
 
     def evaluate(self):
-        return self.children[0].evaluate() / self.children[1].evaluate()
+        result = self.children[0].evaluate() / self.children[1].evaluate()
+        if all([isinstance(x, Integer) for x in self.children]):
+            return round(result)
+        else:
+            return result
 
 
 class Multiply(Expression):
