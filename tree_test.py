@@ -5,7 +5,7 @@ from tree import Leaf, Node, Visitor
 from print_tree import PrintTree, NodeStyle
 from expr_tree import EvaluateExpression, PrintExpression, Add, Integer, Divide, Multiply, Float, Negative
 
-functionality_tests_off = True
+functionality_tests_off = False
 
 class TestTree(unittest.TestCase):
 
