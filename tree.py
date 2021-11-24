@@ -10,7 +10,8 @@ class Leaf():
 
 
 class Node():
-    def __init__(self, name: str, leaf1: Leaf, leaf2: Leaf):
+        if name is "ErrorNode":
+            raise TypeError()
         self.name = name
         self.parent = None
         self.children = [leaf1, leaf2]
