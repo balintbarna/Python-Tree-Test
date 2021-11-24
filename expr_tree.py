@@ -13,14 +13,6 @@ class Expression():
     pass
 
 
-class Add(Expression):
-    def __init__(self, *args) -> None:
-        self.args = args
-
-    def __str__(self) -> str:
-        return type(self).__name__
-
-
 class Integer(Expression):
     def __init__(self, v) -> None:
         self.value = v
@@ -35,6 +27,14 @@ class Float(Expression):
 
     def __str__(self) -> str:
         return "{}({:.1f})".format(type(self).__name__, self.value)
+
+
+class Add(Expression):
+    def __init__(self, *children) -> None:
+        self.children = children
+
+    def __str__(self) -> str:
+        return type(self).__name__
 
 
 class Divide(Expression):
