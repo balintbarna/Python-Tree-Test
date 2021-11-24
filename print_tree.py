@@ -1,9 +1,11 @@
+from enum import Enum, auto, unique
 from tree import Node, Leaf, Visitor
 
 
 class PrintTree(Visitor):
-    pass
+    def __init__(self, node_style) -> None:
+        super().__init__()
 
-
-class NodeStyle():
-    pass
+@unique
+class NodeStyle(Enum):
+    TREE = auto()
