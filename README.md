@@ -1,3 +1,15 @@
+ # Submission of test exercise using tree structures and traversals
+
+ The task was completed in 3.5 hours with all tests passing
+
+
+---
+---
+---
+---
+---
+
+
 # Brief
 
 Goal of the exercise is to implement a tree/visitor structure that
