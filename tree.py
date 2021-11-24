@@ -24,7 +24,7 @@ class Node():
 
 
 class Visitor():
-    def traverse(self):
+    def traverse(self, tree_element):
         pass
 
     def visit(self):
