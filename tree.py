@@ -5,19 +5,25 @@ class Leaf():
         self.name = name
         self.parent = None
 
+    def __str__(self) -> str:
+        return self.name
+
     def accept(self):
         pass
 
 
 class Node():
     def __init__(self, name: str, *children):
-        if name is "ErrorNode":
+        if name == "ErrorNode":
             raise TypeError()
         self.name = name
         self.parent = None
         self.children = children
         for child in self.children:
             child.parent = self
+
+    def __str__(self) -> str:
+        return self.name
 
     def accept(self):
         pass
