@@ -10,24 +10,30 @@ class PrintExpression(Visitor):
 
 
 class Add():
-    pass
+    def __init__(self, *args) -> None:
+        self.args = args
 
 
 class Integer():
-    pass
+    def __init__(self, v) -> None:
+        self.value = v
 
 
 class Divide():
-    pass
+    def __init__(self, *args) -> None:
+        self.args = args
 
 
 class Multiply():
-    pass
+    def __init__(self, *args) -> None:
+        self.args = args
 
 
 class Float():
-    pass
+    def __init__(self, v) -> None:
+        self.value = v
 
 
 class Negative():
-    pass
+    def __init__(self, arg) -> None:
+        self.arg = arg
