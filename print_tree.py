@@ -1,4 +1,5 @@
 from enum import Enum, auto, unique
+from expr_tree import Expression
 from tree import Node, Leaf, Visitor
 
 
@@ -17,6 +18,8 @@ class PrintTree(Visitor):
         super().__init__()
     
     def traverse(self, tree_element):
+        if not self.is_ok_type(tree_element):
+            raise TypeError()
         if self.node_style == NodeStyle.INDENT:
             return self.traverse_indent(tree_element)
         elif self.node_style == NodeStyle.BULLET:
@@ -25,32 +28,26 @@ class PrintTree(Visitor):
             return self.traverse_tree(tree_element)
     
     def traverse_indent(self, tree_element):
-        if (not isinstance(tree_element, Node)) and (not isinstance(tree_element, Leaf)):
-            raise TypeError()
         children_part = ""
-        if isinstance(tree_element, Node) and tree_element.children:
+        if hasattr(tree_element, "children") and tree_element.children:
             for c in tree_element.children:
                 for line in self.traverse(c).splitlines():
                     children_part += "\n  {}".format(line)
-        return "{}{}".format(tree_element.name, children_part)
+        return "{}{}".format(str(tree_element), children_part)
     
     def traverse_bullet(self, tree_element):
-        if (not isinstance(tree_element, Node)) and (not isinstance(tree_element, Leaf)):
-            raise TypeError()
         children_part = ""
-        if isinstance(tree_element, Node) and tree_element.children:
+        if hasattr(tree_element, "children") and tree_element.children:
             for c in tree_element.children:
                 for line in self.traverse(c).splitlines():
                     children_part += "\n  {}".format(line)
-        return "{} {}{}".format(PrintTree.BULLET, tree_element.name, children_part)
+        return "{} {}{}".format(PrintTree.BULLET, str(tree_element), children_part)
     
     def traverse_tree(self, tree_element):
-        if (not isinstance(tree_element, Node)) and (not isinstance(tree_element, Leaf)):
-            raise TypeError()
         connector = self.get_connector(tree_element)
         sign = self.get_element_sign(tree_element)
         children_part = ""
-        if isinstance(tree_element, Node) and tree_element.children:
+        if hasattr(tree_element, "children") and tree_element.children:
             for c in tree_element.children:
                 last_child = c is tree_element.children[len(tree_element.children) - 1]
                 for j, line in enumerate(self.traverse(c).splitlines()):
@@ -58,7 +55,7 @@ class PrintTree(Visitor):
                     road = PrintTree.NO_CONNECTION if last_child else PrintTree.ROAD
                     intersection = self.get_intersection_sign(c, tree_element.children) if direct_child else road
                     children_part += "\n {}{}".format(intersection, line)
-        return "{}{} {}{}".format(connector, sign, tree_element.name, children_part)
+        return "{}{} {}{}".format(connector, sign, str(tree_element), children_part)
     
     def get_element_sign(self, element):
         if isinstance(element, Node):
@@ -84,6 +81,15 @@ class PrintTree(Visitor):
             return PrintTree.CONNECTION
         else:
             return PrintTree.CONNECTION if isinstance(element, Leaf) else PrintTree.NO_CONNECTION
+
+    def is_ok_type(self, element):
+        if isinstance(element, Node):
+            return True
+        if isinstance(element, Leaf):
+            return True
+        if isinstance(element, Expression):
+            return True
+        return False
 
 
 @unique
